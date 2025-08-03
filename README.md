@@ -7,7 +7,7 @@ This portfolio reflects my journey from managing complex IT systems to designing
 ---
 
 ## **🌍 Live Demo**
-🔗 **[View Portfolio](https://your-live-link-here.com)**  
+🔗 **[View Portfolio](https://0lalekan.github.io/ovo-portfolio/)**  
 
 ---
 
