@@ -1,4 +1,8 @@
-        /* ===================== THEME VARIABLES (Dark Mode is now the default) ===================== */
+/* ===================== THEME VARIABLES (Dark Mode is now the default) ===================== */
+        /*
+         * Root variables for both dark and light themes. 
+         * This improves maintainability and ensures consistency.
+         */
         :root {
             --primary: #c09622;
             --primary-light: #e0b744;
@@ -21,7 +25,7 @@
 
         /*
          * This selector is now for light mode.
-         * It activates when the hidden checkbox is NOT checked.
+         * It activates when the hidden checkbox is NOT checked, inverting the theme.
          */
         #theme-toggle:not(:checked) ~ .page-wrapper {
             --primary: #836616;
@@ -38,8 +42,19 @@
             --border: #EAEAEA;
             --box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.1);
         }
+        
+        /*
+         * Hide sun icon and show moon icon when in light mode.
+         * The `~` selector targets siblings of the checkbox.
+         */
+        #theme-toggle:not(:checked) ~ .utility-container .theme-toggle-btn .sun-icon {
+            display: none;
+        }
+        #theme-toggle:not(:checked) ~ .utility-container .theme-toggle-btn .moon-icon {
+            display: block;
+        }
 
-        /* Base Styles */
+        /* ===================== Base Styles ===================== */
         * {
             margin: 0;
             padding: 0;
@@ -97,6 +112,7 @@
             position: relative;
         }
 
+        /* Styling for the underline effect on section titles. */
         h2::after {
             content: '';
             position: absolute;
@@ -164,7 +180,7 @@
             color: white;
         }
 
-        /* Header & Navigation */
+        /* ===================== Header & Navigation ===================== */
         header {
             position: fixed;
             top: 0;
@@ -222,56 +238,135 @@
             width: 100%;
         }
 
+        /* Hamburger Menu (Mobile) */
+        #menu-toggle {
+            display: none;
+        }
+
+        .hamburger-menu {
+            display: none;
+            font-size: 1.8rem;
+            color: var(--text);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .mobile-menu-container {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 300px; /* Reduced width */
+            height: 100vh;
+            background: var(--card-bg);
+            transform: translateX(100%);
+            transition: transform 0.4s ease-in-out;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 2rem;
+            z-index: 999;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            font-size: 2rem;
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .mobile-menu-container a {
+            font-size: 2rem;
+            color: var(--text);
+            font-weight: 600;
+            padding: 1rem 0;
+            width: 100%;
+            text-align: center;
+            position: relative;
+        }
+
+        .mobile-menu-container a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: var(--primary);
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        .mobile-menu-container a:hover::after {
+            width: 60%;
+        }
+
+        /* When the menu is checked, slide it into view. */
+        #menu-toggle:checked ~ .page-wrapper .mobile-menu-container {
+            transform: translateX(0);
+        }
+        
+        #menu-toggle:checked ~ .page-wrapper #header .hamburger-menu {
+            display: none;
+        }
+        
+        /* Utility container for theme toggle and go-up button */
+        .utility-container {
+            position: fixed;
+            bottom: 2.5rem;
+            right: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 100;
+            align-items: center;
+        }
+        
         /* Theme Toggle */
         #theme-toggle {
             display: none;
         }
 
-        .theme-toggle {
+        /*
+         * Styling for the theme toggle button.
+         * The `label` is used as the button itself.
+         */
+        .theme-toggle-btn {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            margin-left: 1.5rem;
-        }
-
-        .toggle-label {
-            position: relative;
-            display: inline-block;
+            justify-content: center;
             width: 60px;
-            height: 32px;
-            cursor: pointer;
-        }
-
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            height: 60px;
             background: var(--card-bg);
+            color: var(--primary);
             border: 2px solid var(--border);
-            transition: var(--transition);
-            border-radius: 34px;
-        }
-
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 24px;
-            width: 24px;
-            left: 3px;
-            bottom: 2px;
-            background: var(--primary);
-            transition: var(--transition);
             border-radius: 50%;
+            font-size: 1.6rem;
+            box-shadow: var(--box-shadow);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .theme-toggle-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-5px);
         }
 
-        #theme-toggle:not(:checked) ~ .page-wrapper .toggle-slider:before {
-            transform: translateX(26px);
+        .theme-toggle-btn .sun-icon {
+            display: block;
+        }
+        
+        .theme-toggle-btn .moon-icon {
+            display: none;
         }
 
-        /* Hero Section with Animation */
+        /* ===================== Hero Section with Animation ===================== */
         #hero {
             height: 100vh;
             display: flex;
@@ -292,6 +387,7 @@
             
         }
 
+        /* Adding a semi-transparent overlay for better text readability. */
         .hero-bg::after {
             content: '';
             position: absolute;
@@ -348,7 +444,7 @@
             flex-wrap: wrap;
         }
 
-        /* About Section */
+        /* ===================== About Section ===================== */
         .about-container {
             display: flex;
             flex-direction: column;
@@ -399,6 +495,7 @@
             width: fit-content;
         }
 
+        /* Skills Grid */
         .skills-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -477,7 +574,7 @@
             text-align: center;
         }
 
-        /* Education Section */
+        /* ===================== Education Section ===================== */
         #education {
             background: linear-gradient(to bottom, var(--light), var(--card-bg));
             padding: var(--section-spacing) 0;
@@ -528,7 +625,7 @@
             color: var(--text-light);
         }
 
-        /* Interests Section */
+        /* ===================== Interests Section ===================== */
         #interests {
             background: linear-gradient(to bottom, var(--card-bg), var(--light));
             padding: var(--section-spacing) 0;
@@ -576,7 +673,7 @@
             color: var(--text-light);
         }
 
-        /* Services Section */
+        /* ===================== Services Section ===================== */
         .services-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -608,7 +705,7 @@
             margin-bottom: 1.2rem;
         }
 
-        /* Projects Section */
+        /* ===================== Projects Section ===================== */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -714,7 +811,7 @@
             font-weight: 500;
         }
 
-        /* Contact Section */
+        /* ===================== Contact Section ===================== */
         .contact-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -798,6 +895,7 @@
             resize: vertical;
         }
 
+        /* Footer Section */
         .footer-logo-info {
             display: flex;
             flex-direction: column;
@@ -814,7 +912,6 @@
             transform: scale(1.05);
         }
 
-        /* Footer */
         footer {
             background: var(--card-bg);
             padding: 5rem 0 2.5rem;
@@ -914,9 +1011,6 @@
 
         /* Go Up Button */
         .go-up {
-            position: fixed;
-            bottom: 2.5rem;
-            right: 2.5rem;
             width: 60px;
             height: 60px;
             background: var(--primary);
@@ -927,7 +1021,6 @@
             justify-content: center;
             font-size: 1.6rem;
             box-shadow: var(--box-shadow);
-            z-index: 100;
             transition: var(--transition);
             cursor: pointer;
         }
@@ -937,8 +1030,18 @@
             transform: translateY(-8px);
         }
 
-        /* Responsive Design */
-        @media (max-width: 1200px) {
+        /* ===================== Responsive Design ===================== */
+        @media (max-width: 1100px) {
+            /* Hide desktop navigation and show hamburger menu on smaller screens. */
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger-menu {
+                display: block;
+            }
+            
+            /* Adjustments for the project grid on tablets. */
             .projects-grid {
                 grid-template-columns: 1fr 1fr;
                 grid-template-rows: auto auto auto;
@@ -975,8 +1078,9 @@
                 grid-template-columns: 1fr;
             }
         }
-
+        
         @media (max-width: 768px) {
+            /* Adjustments for typography and layout on mobile devices. */
             h1 {
                 font-size: 3rem;
             }
@@ -989,15 +1093,12 @@
                 font-size: 3.2rem;
             }
 
-            .nav-links {
-                gap: 1.5rem;
-            }
-
             .hero-btns {
                 flex-direction: column;
                 align-items: center;
             }
 
+            /* Stack projects vertically on small screens. */
             .projects-grid {
                 grid-template-columns: 1fr;
                 grid-template-rows: auto;
@@ -1022,6 +1123,7 @@
         }
 
         @media (max-width: 576px) {
+            /* Fine-tuning for smaller mobile devices. */
             h1 {
                 font-size: 2.5rem;
             }
@@ -1052,5 +1154,11 @@
             
             .project-overlay {
                 padding: 1.5rem;
+            }
+            
+            .utility-container {
+                bottom: 1.5rem;
+                right: 1.5rem;
+                gap: 1rem;
             }
         }
