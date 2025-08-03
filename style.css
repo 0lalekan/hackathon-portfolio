@@ -279,7 +279,7 @@
             position: relative;
             overflow: hidden;
             padding-top: 0;
-            background: url(/hackathon-portfolio/assets/bg.png) center/cover no-repeat;
+            background: url(assets/bg.png) center/cover no-repeat;
         }
 
         .hero-bg {
