@@ -404,6 +404,7 @@
             margin: 0 auto;
             color: white;
             padding: 2rem;
+            padding-top: 2rem;
             position: relative;
             z-index: 2;
         }
